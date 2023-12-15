@@ -50,3 +50,30 @@ limit 5
 
 /* 2. Let's invite the artists who have written the most rock music in our dataset. Write a
 query that returns the Artist name and total track count of the top 10 rock bands ! */
+
+select a.artist_id,a.name,count(a.artist_id) as frequency
+from artist as a full join 
+album as al on 
+a.artist_id = al.artist_id full join 
+track as t on 
+al.album_id = t.album_id full join
+genre as g on
+t.genre_id = g.genre_id
+where g.name like 'Rock'
+group by a.artist_id
+order by frequency desc
+limit 1
+
+/* 3. Return all the track names that have a song length longer than the average song length.
+Return the Name and Milliseconds for each track. Order by the song length with the
+longest songs listed first */
+select name, milliseconds from track
+where milliseconds > (
+select avg(milliseconds) as duration from track )
+order by milliseconds desc
+limit 5
+
+/* 1. Find how much amount spent by each customer on artists? Write a query to return
+customer name, artist name and total spent */
+select * from invoice_line
+
