@@ -74,6 +74,41 @@ order by milliseconds desc
 limit 5
 
 /* 1. Find how much amount spent by each customer on artists? Write a query to return
-customer name, artist name and total spent */
-select * from invoice_line
+ artist name and total spent */
+-- algo : create a temporary table with artist total cost, then join customer tabl then join both
+-- temp table with the joined table to get the output.
+
+with artist_total_cost As (
+select artist.artist_id as artist_id,artist.name as artist_name,
+	sum(il.unit_price*il.quantity) as total_cost
+from invoice_line as il
+full join track on track.track_id = il.track_id full join 
+album on album.album_id = track.album_id full join 
+artist on artist.artist_id=album.artist_id
+group by 1 -- artist.artist_id
+order by 3 desc -- total_cost
+)
+select concat(c.first_name,c.last_name),atc.artist_name,
+       atc.total_cost
+from customer as c full join invoice as i
+on c.customer_id = i.customer_id 
+full join invoice_line as il
+on i.invoice_id=il.invoice_id
+full join track as t
+on il.track_id=t.track_id
+full join album
+on album.album_id = t.album_id 
+full join artist_total_cost as atc -- full join with the temporary table -WITH
+on album.artist_id = atc.artist_id
+where atc.total_cost is not null
+order by 3 desc
+limit 5
+
+/* 2. We want to find out the most popular music Genre for each country. We determine the
+most popular genre as the genre with the highest amount of purchases. Write a query
+that returns each country along with the top Genre. For countries where the maximum
+number of purchases is shared return all Genres */
+
+
+
 
