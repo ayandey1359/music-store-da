@@ -24,3 +24,29 @@ group by billing_city
 order by total_invoice_city desc
 limit 1
 
+/* 5. Who is the best customer? The customer who has spent the most money will be
+declared the best customer. Write a query that returns the person who has spent the
+most money */
+select first_name,last_name,sum(total) as total_invoice from customer as c full join invoice as i
+on c.customer_id=i.customer_id
+group by c.customer_id
+order by total_invoice desc
+limit 1
+
+/* 1. Write query to return the email, first name, last name, & Genre of all Rock Music
+listeners. Return your list ordered alphabetically by email starting with A */
+
+select first_name,last_name,email from customer as c full join 
+invoice as i on
+c.customer_id = i.customer_id full join 
+invoice_line as il on
+i.invoice_id = il.invoice_id
+where track_id in(
+select track_id from track full join genre
+on track.genre_id = genre.genre_id
+where genre.name like 'Rock')
+order by email 
+limit 5
+
+/* 2. Let's invite the artists who have written the most rock music in our dataset. Write a
+query that returns the Artist name and total track count of the top 10 rock bands ! */
