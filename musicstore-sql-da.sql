@@ -108,6 +108,42 @@ limit 5
 most popular genre as the genre with the highest amount of purchases. Write a query
 that returns each country along with the top Genre. For countries where the maximum
 number of purchases is shared return all Genres */
+select * from invoice_line 
+where quantity > 1    -- Analysis all invoice line have one purchase quantity 
+
+with max_country_sales as (
+select i.billing_country as country,genre.name,count(il.quantity),
+	row_number()over(partition by i.billing_country order by count(*) desc ) as index1
+from invoice as i full join invoice_line as il
+	on i.invoice_id=il.invoice_id
+full join track as t
+	on t.track_id=il.track_id 
+full join genre
+	on t.genre_id=genre.genre_id
+group by 1,2
+order by 1 asc, index1 asc
+)
+select * from max_country_sales where index1 <= 1
+
+/* 3. Write a query that determines the customer that has spent the most on music for each
+country. Write a query that returns the country along with the top customer and how
+much they spent. For countries where the top amount spent is shared, provide all
+customers who spent this amount */
+
+-- cutomer country music type spend 
+with customer_country as (
+select c.customer_id,c.first_name,c.last_name,i.billing_country,sum(i.total) as total_cost,
+	row_number()over(partition by billing_country order by sum(i.total) desc) as index1
+from customer as c full join invoice as i
+on c.customer_id = i.customer_id 
+group by 1,2,3,4
+order by 4 asc,5 desc
+)
+select * from customer_country where index1 <= 1
+
+-- ====================================================================================================
+
+
 
 
 
