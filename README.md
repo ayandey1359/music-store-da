@@ -39,7 +39,7 @@ This repository contains SQL queries and analyses performed on a music store dat
 11. **Top Customer by Country:**
     - Identifying the customer that has spent the most on music for each country.
 
-**And many more questions** 
+**And many more questions** [link here](https://github.com/ayandey1359/music-store-da/blob/355cadbc4a7b4a245163b6619d0f9fd569ae86d1/musicstore-sql-da.sql)  
     
 
 ### How to Use
