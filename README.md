@@ -39,6 +39,9 @@ This repository contains SQL queries and analyses performed on a music store dat
 11. **Top Customer by Country:**
     - Identifying the customer that has spent the most on music for each country.
 
+**And many more questions** 
+    
+
 ### How to Use
 
 - Each query is documented with a comment block explaining the purpose and approach.
