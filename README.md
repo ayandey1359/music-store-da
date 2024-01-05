@@ -1,4 +1,4 @@
-# music-store-da
+# Music Store Data Analysis
 ---
 ## Overview
 
